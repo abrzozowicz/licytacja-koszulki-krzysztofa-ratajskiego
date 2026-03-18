@@ -2,163 +2,173 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Licytacja dla Maksa!</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --neon-green: #2ecc71; --neon-red: #ff003c; --bg-black: #000000; --card-gray: #0a0a0a; --border: #1a1a1a; }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; background: var(--bg-black); color: white; font-family: 'Inter', sans-serif; }
-        .full-page { width: 100%; display: flex; flex-direction: column; align-items: center; }
-        .top-title-bar { width: 100%; background: var(--neon-red); color: white; text-align: center; padding: 15px; font-weight: 900; text-transform: uppercase; }
-        .timer-section { width: 100%; padding: 20px; text-align: center; }
-        #countdown { font-size: clamp(2rem, 8vw, 4rem); font-weight: 900; color: white; }
-        .main-price { font-size: clamp(4rem, 15vw, 8rem); font-weight: 950; color: var(--neon-green); margin: 10px 0; }
-        .status-bar { color: #888; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; }
-        .tiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 90%; max-width: 600px; margin-bottom: 20px; }
-        .bid-tile { background: var(--card-gray); border: 1px solid var(--border); padding: 20px; border-radius: 10px; color: var(--neon-red); font-weight: 900; cursor: pointer; text-align: center; }
-        .bid-tile.active { border-color: var(--neon-green); color: var(--neon-green); background: rgba(46,204,113,0.1); }
-        .panel-box { background: var(--card-gray); padding: 20px; border-radius: 15px; border: 1px solid var(--border); width: 90%; max-width: 500px; margin-bottom: 20px; text-align: center; }
-        input { width: 100%; padding: 15px; margin-bottom: 10px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; text-align: center; }
-        .submit-btn { width: 100%; padding: 20px; background: var(--neon-green); color: black; font-weight: 900; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase; }
-        .history-entry { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1a1a1a; }
-        .history-val { color: var(--neon-green); font-weight: 900; }
-        #thanks-modal { display: none; position: fixed; z-index: 999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; flex-direction:column; }
-        #thanks-modal.active { display: flex; }
+        :root { --green: #2ecc71; --red: #ff003c; --bg: #000; --card: #0a0a0a; --border: #1a1a1a; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Inter', sans-serif; text-align: center; }
+        .container { padding: 20px; max-width: 600px; margin: 0 auto; }
+        .price-tag { font-size: clamp(3.5rem, 12vw, 5.5rem); font-weight: 900; color: var(--green); margin: 20px 0; line-height: 1; }
+        .leader { color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; font-size: 0.9rem; }
+        .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 30px; }
+        .tile { background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 10px; color: var(--red); font-weight: 900; cursor: pointer; transition: 0.2s; }
+        .tile.active { border-color: var(--green); color: var(--green); background: rgba(46,204,113,0.1); }
+        .input-box { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--border); margin-bottom: 30px; }
+        input { width: 100%; padding: 15px; margin-bottom: 10px; background: #000; border: 1px solid #333; color: white; border-radius: 8px; text-align: center; font-size: 1rem; }
+        .btn { width: 100%; padding: 20px; background: var(--green); color: black; font-weight: 900; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase; font-size: 1.1rem; }
+        .btn:disabled { background: #444; cursor: not-allowed; }
+        .history { text-align: left; background: var(--card); padding: 20px; border-radius: 15px; border: 1px solid var(--border); }
+        .entry { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1a1a1a; }
+        .val { color: var(--green); font-weight: 900; }
+        #thanks { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); align-items:center; justify-content:center; flex-direction:column; z-index: 999; padding: 20px; }
     </style>
 </head>
 <body>
 
-<div id="thanks-modal">
-    <h2 style="color: var(--neon-green);">DZIĘKUJEMY!</h2>
-    <p>Twoja oferta została zapisana.</p>
-    <button onclick="location.reload()" style="padding: 10px 30px; cursor:pointer;">ZAMKNIJ</button>
+<div id="thanks">
+    <h1 style="color: var(--green); text-align: center;">OFERTA PRZYJĘTA!</h1>
+    <p style="text-align: center;">Dziękujemy za wsparcie dla Maksa. Strona zostanie odświeżona.</p>
+    <button onclick="location.reload()" class="btn" style="width: auto; padding: 10px 40px;">OK, ROZUMIEM</button>
 </div>
 
-<div class="full-page">
-    <div class="top-title-bar">Licytacja dla Maksa!</div>
+<div class="container">
+    <h2 style="color: var(--red); text-transform: uppercase; letter-spacing: 1px;">Licytacja dla Maksa</h2>
     
-    <section class="timer-section">
-        <div id="countdown">00 : 00 : 00 : 00</div>
-    </section>
+    <div class="price-tag" id="mainPrice">...</div>
+    <div class="leader" id="leaderLabel">Inicjalizacja systemu...</div>
 
-    <div class="main-price" id="displayPrice">...</div>
-    <div class="status-bar" id="currentLeaderLabel">Ładowanie ceny...</div>
-
-    <div class="tiles-grid">
-        <div class="bid-tile" onclick="setStep(10, this)">+10</div>
-        <div class="bid-tile" onclick="setStep(20, this)">+20</div>
-        <div class="bid-tile" onclick="setStep(50, this)">+50</div>
-        <div class="bid-tile" onclick="setStep(100, this)">+100</div>
-        <div class="bid-tile" onclick="setStep(200, this)">+200</div>
-        <div class="bid-tile" onclick="setStep(500, this)">+500</div>
+    <div class="tiles">
+        <div class="tile" onclick="select(10, this)">+10</div>
+        <div class="tile" onclick="select(20, this)">+20</div>
+        <div class="tile" onclick="select(50, this)">+50</div>
+        <div class="tile" onclick="select(100, this)">+100</div>
+        <div class="tile" onclick="select(200, this)">+200</div>
+        <div class="tile" onclick="select(500, this)">+500</div>
     </div>
 
-    <div class="panel-box">
-        <input type="text" id="nameField" placeholder="Imię i Nazwisko">
-        <input type="tel" id="phoneField" placeholder="Numer telefonu">
-        <div id="newTotal" style="font-size: 1.5rem; margin: 15px 0; color: var(--neon-green);">Suma: ---</div>
-        <button class="submit-btn" id="btnSubmit" onclick="submitBid()">Potwierdź licytację</button>
+    <div class="input-box">
+        <input type="text" id="uName" placeholder="Imię i Nazwisko">
+        <input type="tel" id="uPhone" placeholder="Numer telefonu">
+        <div id="uTotal" style="margin: 15px 0; font-weight: bold; color: var(--green);">Wybierz kwotę podbicia powyżej</div>
+        <button class="btn" id="sendBtn" onclick="send()">Potwierdź licytację</button>
     </div>
 
-    <div class="panel-box">
-        <h3 style="text-transform: uppercase; font-size: 0.8rem; color: #555;">Ostatnie licytacje</h3>
-        <div id="bidHistory">Pobieranie...</div>
+    <div class="history">
+        <h4 style="margin: 0 0 15px 0; color: #555; text-transform: uppercase; font-size: 0.75rem;">5 ostatnich ofert</h4>
+        <div id="histContent">Czekam na dane...</div>
     </div>
 </div>
 
 <script>
-    const sheetDB_URL = "https://sheetdb.io/api/v1/q26o9bn9mcffp";
-    const endDate = new Date("March 29, 2026 22:00:00").getTime();
-    let currentPrice = 100;
-    let selectedStep = 0;
+    const API = "https://sheetdb.io/api/v1/q26o9bn9mcffp";
+    let current = 100;
+    let step = 0;
 
-    // Timer
-    setInterval(() => {
-        const now = new Date().getTime();
-        const dist = endDate - now;
-        if (dist < 0) { document.getElementById("countdown").innerText = "KONIEC"; return; }
-        const d = Math.floor(dist / 86400000);
-        const h = Math.floor((dist % 86400000) / 3600000);
-        const m = Math.floor((dist % 3600000) / 60000);
-        const s = Math.floor((dist % 60000) / 1000);
-        document.getElementById("countdown").innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
-    }, 1000);
-
-    async function refreshData() {
+    async function load() {
         try {
-            const res = await fetch(`${sheetDB_URL}?_=${Date.now()}`);
-            const data = await res.json();
+            // Dodajemy parametr czasu, aby uniknąć starych danych z pamięci podręcznej (Cache-busting)
+            const r = await fetch(`${API}?_t=${Date.now()}`);
+            const data = await r.json();
             
-            if (Array.isArray(data) && data.length > 0) {
-                // Znajdź poprawne nazwy kluczy (bo SheetDB rozróżnia wielkość liter)
+            if (data && Array.isArray(data) && data.length > 0) {
+                // Automatyczne dopasowanie nazw kluczy (niezależnie od wielkości liter w nagłówkach arkusza)
                 const firstRow = data[0];
                 const keyBid = Object.keys(firstRow).find(k => k.toLowerCase() === 'bid');
                 const keyName = Object.keys(firstRow).find(k => k.toLowerCase() === 'name');
 
-                // Filtrowanie i sortowanie numerów
-                const validBids = data.filter(item => item[keyBid] && !isNaN(parseInt(item[keyBid])));
+                // Filtrujemy tylko wiersze, które mają wpisaną kwotę
+                const validBids = data.filter(i => i[keyBid] && !isNaN(parseInt(i[keyBid])));
                 
                 if (validBids.length > 0) {
-                    // Sortujemy numerycznie, żeby mieć PEWNOŚĆ co do najwyższej ceny
+                    // Sortujemy od najwyższej kwoty (pewność lidera)
                     const sorted = [...validBids].sort((a, b) => parseInt(b[keyBid]) - parseInt(a[keyBid]));
-                    currentPrice = parseInt(sorted[0][keyBid]);
+                    current = parseInt(sorted[0][keyBid]);
                     
-                    document.getElementById('displayPrice').innerText = currentPrice + " PLN";
-                    const leader = sorted[0][keyName] ? sorted[0][keyName].split(' ')[0] : "Anonim";
-                    document.getElementById('currentLeaderLabel').innerHTML = `Prowadzi: <span style="color:white">${leader}</span>`;
+                    document.getElementById('mainPrice').innerText = current + " PLN";
+                    const topName = sorted[0][keyName] ? sorted[0][keyName].split(' ')[0] : "Ktoś";
+                    document.getElementById('leaderLabel').innerHTML = `Aktualny lider: <span style="color:white">${topName}</span>`;
 
-                    // Historia - 5 najnowszych wierszy z arkusza (chronologicznie ostatnie dodane)
-                    const historyDiv = document.getElementById('bidHistory');
-                    historyDiv.innerHTML = "";
-                    const latest = validBids.slice(-5).reverse();
-                    
-                    latest.forEach(b => {
-                        const div = document.createElement('div');
-                        div.className = 'history-entry';
-                        div.innerHTML = `<span>${b[keyName] ? b[keyName].split(' ')[0] : '???'}</span><span class="history-val">${b[keyBid]} PLN</span>`;
-                        historyDiv.appendChild(div);
+                    // Budowanie historii (5 ostatnich wpisów z arkusza)
+                    const hist = document.getElementById('histContent');
+                    hist.innerHTML = "";
+                    validBids.slice(-5).reverse().forEach(b => {
+                        const name = (b[keyName] || 'Anonim').split(' ')[0];
+                        const val = b[keyBid];
+                        hist.innerHTML += `<div class="entry"><span>${name}</span><span class="val">${val} PLN</span></div>`;
                     });
+                } else {
+                    noData();
                 }
             } else {
-                document.getElementById('displayPrice').innerText = "100 PLN";
-                document.getElementById('bidHistory').innerText = "Brak licytacji";
+                noData();
             }
-        } catch (e) { console.error("Błąd fetch:", e); }
+        } catch (e) { 
+            console.error("Błąd połączenia z API:", e);
+            document.getElementById('leaderLabel').innerText = "Błąd połączenia z bazą.";
+        }
     }
 
-    function setStep(val, el) {
-        selectedStep = val;
-        document.getElementById('newTotal').innerText = "Suma: " + (currentPrice + val) + " PLN";
-        document.querySelectorAll('.bid-tile').forEach(t => t.classList.remove('active'));
+    function noData() {
+        document.getElementById('mainPrice').innerText = "100 PLN";
+        document.getElementById('leaderLabel').innerText = "Cena wywoławcza - brak ofert";
+        document.getElementById('histContent').innerHTML = "<div style='color:#444'>Bądź pierwszy!</div>";
+    }
+
+    function select(v, el) {
+        step = v;
+        document.getElementById('uTotal').innerText = "Twoja oferta: " + (current + v) + " PLN";
+        document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
         el.classList.add('active');
     }
 
-    async function submitBid() {
-        const name = document.getElementById('nameField').value.trim();
-        const phone = document.getElementById('phoneField').value.trim();
-        if (!name || !phone || selectedStep === 0) { alert("Wypełnij wszystko!"); return; }
+    async function send() {
+        const n = document.getElementById('uName').value.trim();
+        const p = document.getElementById('uPhone').value.trim();
+        
+        if (!n || !p || step === 0) { 
+            alert("Proszę wpisać dane oraz wybrać o ile chcesz podbić cenę!"); 
+            return; 
+        }
 
-        const btn = document.getElementById('btnSubmit');
-        btn.disabled = true; btn.innerText = "SŁANIE...";
+        const b = document.getElementById('sendBtn');
+        b.disabled = true; 
+        b.innerText = "PRZETWARZANIE...";
 
         try {
-            const finalBid = currentPrice + selectedStep;
-            const res = await fetch(sheetDB_URL, {
+            // Przed wysłaniem pobieramy najświeższą cenę, żeby uniknąć licytowania "starej" kwoty
+            await load(); 
+            const finalBid = current + step;
+
+            const res = await fetch(API, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "data": [{ "name": name, "phone": `'${phone}`, "bid": finalBid, "time": new Date().toLocaleString() }] })
+                body: JSON.stringify({ 
+                    "data": [{ 
+                        "name": n, 
+                        "phone": `'${p}`, // Apostrof chroni numer telefonu przed formatowaniem w Excelu
+                        "bid": finalBid, 
+                        "time": new Date().toLocaleString('pl-PL') 
+                    }] 
+                })
             });
 
             if (res.ok) {
-                document.getElementById('thanks-modal').classList.add('active');
-            } else { alert("Błąd zapisu."); }
-        } catch (e) { alert("Błąd sieci."); }
-        btn.disabled = false; btn.innerText = "Potwierdź";
+                document.getElementById('thanks').style.display = 'flex';
+            } else { 
+                alert("Wystąpił problem z zapisem. Upewnij się, że arkusz Google ma ustawiony dostęp dla 'Każdej osoby z linkiem' jako 'Edytujący'."); 
+            }
+        } catch (e) { 
+            alert("Błąd połączenia. Sprawdź internet."); 
+        } finally {
+            b.disabled = false; 
+            b.innerText = "Potwierdź licytację";
+        }
     }
 
-    window.onload = refreshData;
-    setInterval(refreshData, 10000);
+    // Start i interwał odświeżania (10 sek)
+    window.onload = load;
+    setInterval(load, 10000);
 </script>
 </body>
 </html>
