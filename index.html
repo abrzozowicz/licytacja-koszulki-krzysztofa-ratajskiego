@@ -270,7 +270,7 @@
         document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
     }
 
-    setInterval(updateTimer, 1000); setInterval(fetchBids, 5000);
+    setInterval(updateTimer, 1000); setInterval(fetchBids, 1000);
     fetchBids(); updateTimer();
 </script>
 </body>
