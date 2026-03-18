@@ -2,65 +2,301 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Przerwa techniczna - Licytacja dla Maksa</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Eagle Auction | Krzysztof Ratajski dla Maksa</title>
+    
+    <meta property="og:title" content="🎯 Licytuj zestaw Krzysztofa Ratajskiego! 🔥">
+    <meta property="og:description" content="Zdobądź koszulkę i lotki najlepszego polskiego dartera! Wspieramy Maksa! 🚀❤️">
+    <meta property="og:image" content="https://i.imgur.com/uBvXqR3_d.jpeg">
+
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
+        :root {
+            --eagle-red: #d63031;
+            --eagle-white: #ffffff;
+            --bg-dark: #0a0a0a;
+            --card-bg: #161616;
+            --border: #222;
         }
-        .container {
-            padding: 20px;
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; padding: 0; background: var(--bg-dark); color: var(--eagle-white); 
+            font-family: 'Inter', sans-serif; overflow-x: hidden; 
         }
-        h1 {
-            font-size: clamp(2rem, 8vw, 4rem);
-            font-weight: 900;
-            color: #ff003c; /* Czerwony neonowy */
-            margin-bottom: 10px;
-            text-transform: uppercase;
+
+        /* Nagłówek - Sportowy Gradient Biało-Czerwony */
+        .hero-header {
+            width: 100%; padding: 80px 20px; text-align: center;
+            background: linear-gradient(135deg, #d63031 0%, #8b0000 50%, #ffffff 100%);
+            border-bottom: 5px solid var(--eagle-red);
+            position: relative;
         }
-        p {
-            font-size: 1.2rem;
-            color: #888;
-            max-width: 500px;
-            margin: 0 auto;
-            line-height: 1.6;
+
+        .hero-header h1 { 
+            font-family: 'Oswald', sans-serif; font-size: clamp(2.5rem, 12vw, 5.5rem); 
+            margin: 0; text-transform: uppercase; letter-spacing: -2px; line-height: 0.9;
+            color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.4);
         }
-        .icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
+
+        .hero-header .subtitle { 
+            color: rgba(255,255,255,0.9); font-weight: 900; letter-spacing: 5px; 
+            font-size: 1.1rem; margin-bottom: 10px; text-transform: uppercase;
         }
-        .loader {
-            margin-top: 30px;
-            border: 3px solid #1a1a1a;
-            border-top: 3px solid #2ecc71; /* Zielony neonowy */
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            display: inline-block;
+
+        /* Statystyki */
+        .stats-bar {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+            margin: -40px 20px 30px; position: relative; z-index: 10;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+
+        .stat-card {
+            background: var(--card-bg); border-top: 4px solid var(--eagle-red);
+            padding: 25px; border-radius: 15px; min-width: 280px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6); text-align: center;
         }
+
+        .stat-label { color: #888; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .stat-value { font-family: 'Oswald', sans-serif; font-size: 3.5rem; line-height: 1; }
+        #countdown { font-size: 2.2rem; color: var(--eagle-red); letter-spacing: 1px; }
+        #leaderName { color: #888; font-size: 0.9rem; margin-top: 5px; text-transform: uppercase; font-weight: bold; }
+
+        /* Galeria */
+        .gallery-wrap { padding: 0 20px; margin-bottom: 40px; width: 100%; max-width: 1100px; margin-left: auto; margin-right: auto; }
+        .img-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 15px; height: 450px; }
+        .img-grid div { background: #111; border-radius: 20px; overflow: hidden; border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+        .img-grid img { width: 100%; height: 100%; object-fit: contain; padding: 15px; }
+
+        /* Sekcja Info */
+        .info-section {
+            background: #111; padding: 35px; border-radius: 25px; border: 1px solid var(--border);
+            line-height: 1.8; color: #ccc; margin-top: 20px;
+        }
+        .info-section h2 { font-family: 'Oswald'; color: var(--eagle-red); margin-top: 0; text-transform: uppercase; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; margin-top: 20px; }
+        .info-item { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; border-left: 4px solid var(--eagle-red); }
+
+        /* Licytacja */
+        .bidding-area { width: 100%; max-width: 800px; padding: 0 20px; margin: 40px auto 60px; }
+        .tiles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        
+        .bid-tile {
+            background: #1a1a1a; border: 1px solid #333; padding: 25px 0; border-radius: 15px;
+            color: #fff; font-family: 'Oswald', sans-serif; font-size: 1.8rem; text-align: center;
+            cursor: pointer; transition: 0.2s;
+        }
+        .bid-tile:hover { border-color: var(--eagle-red); transform: translateY(-3px); }
+        .bid-tile.active { background: var(--eagle-red); border-color: var(--eagle-red); box-shadow: 0 0 25px rgba(214, 48, 49, 0.4); }
+
+        .bid-form { background: #111; padding: 35px; border-radius: 25px; border: 1px solid var(--border); }
+        input { 
+            width: 100%; padding: 18px; margin-bottom: 15px; background: #000; border: 1px solid #333; 
+            color: white; border-radius: 12px; font-size: 1.1rem; text-align: center; font-family: 'Inter', sans-serif;
+        }
+        input:focus { border-color: var(--eagle-red); outline: none; }
+        
+        .submit-btn {
+            width: 100%; padding: 22px; background: var(--eagle-red); color: white;
+            font-weight: 900; border: none; border-radius: 12px; cursor: pointer;
+            text-transform: uppercase; font-size: 1.4rem; font-family: 'Oswald', sans-serif;
+            transition: 0.3s; margin-top: 10px;
+        }
+        .submit-btn:disabled { background: #333; cursor: not-allowed; }
+
+        .history-box { margin-top: 40px; background: rgba(255,255,255,0.02); border-radius: 20px; padding: 30px; border: 1px solid var(--border); }
+        .history-row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #222; font-size: 1.2rem; }
+        .history-row strong { color: var(--eagle-red); font-family: 'Oswald', sans-serif; font-size: 1.6rem; }
+
+        @media (max-width: 768px) {
+            .img-grid { grid-template-columns: 1fr; height: auto; }
+            .img-grid div { height: 300px; }
+            .info-grid { grid-template-columns: 1fr; }
+            .tiles-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        #thanks-modal { 
+            display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.98); align-items: center; justify-content: center; text-align: center; padding: 20px;
+        }
+        #thanks-modal.active { display: flex; flex-direction: column; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">🎯</div>
-        <h1>Konserwujemy stronę</h1>
-        <p>Trwają prace techniczne nad systemem licytacji. Zapraszamy ponownie wieczorem – wrócimy z pełną mocą!</p>
-        <div class="loader"></div>
+
+<div id="thanks-modal">
+    <h1 style="color: var(--eagle-red); font-family: 'Oswald'; font-size: 4rem; margin-bottom: 0;">POTWIERDZONO!</h1>
+    <p style="font-size: 1.4rem; max-width: 500px;">Twoja oferta została zapisana. Dziękujemy za pomoc dla Maksa! 🦅🎯</p>
+    <button onclick="location.reload()" style="padding: 18px 45px; background: white; border: none; border-radius: 50px; font-weight: 900; cursor: pointer; margin-top: 30px; text-transform: uppercase; font-family: 'Oswald';">Wróć do strony</button>
+</div>
+
+<div class="hero-header">
+    <div class="subtitle">Aukcja Charytatywna</div>
+    <h1>The Polish Eagle</h1>
+    <div style="margin-top: 15px; font-weight: 800; letter-spacing: 1px; color: #333;">KRZYSZTOF RATAJSKI DLA MAKSYMILIANA MAZURKA</div>
+</div>
+
+<div class="stats-bar">
+    <div class="stat-card">
+        <div class="stat-label">Aktualna oferta</div>
+        <div class="stat-value"><span id="displayPrice">0</span><small style="font-size: 1.5rem; margin-left: 5px;">PLN</small></div>
+        <div id="leaderName">Czekamy na start...</div>
     </div>
+    <div class="stat-card">
+        <div class="stat-label">Koniec licytacji za</div>
+        <div class="stat-value" id="countdown">--:--:--</div>
+    </div>
+</div>
+
+<div class="gallery-wrap">
+    <div class="img-grid">
+        <div><img src="https://i.imgur.com/mqHTrpl.png" alt="Koszulka Krzysztofa Ratajskiego"></div>
+        <div><img src="https://i.imgur.com/DgtpxXi.png" alt="Lotki Krzysztofa Ratajskiego"></div>
+    </div>
+    
+    <div class="info-section">
+        <h2>⏳ Kiedy kończymy?</h2>
+        <p>W darcie liczy się precyzja, a w pomaganiu – czas! Nie czekaj do ostatniej lotki. Otwórzmy serca i pokażmy siłę darterskiej społeczności! Licytuj odważnie – dla Ciebie to piękna pamiątka, dla Maksa to bezcenna pomoc. 🚀❤️</p>
+        
+        <div class="info-grid">
+            <div class="info-item">
+                <strong>📅 FINAŁ LICYTACJI</strong><br>
+                29 marca, godzina 22:00
+            </div>
+            <div class="info-item">
+                <strong>📦 DOSTAWA I ODBIÓR</strong><br>
+                Wysyłka za pobraniem lub odbiór osobisty w Częstochowie.
+            </div>
+        </div>
+        
+        <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.7;">
+            * Licytujemy o min. 10 zł więcej. Wygrywa najwyższa oferta. Po zakończeniu skontaktujemy się telefonicznie ze zwycięzcą.
+        </p>
+    </div>
+</div>
+
+<div class="bidding-area">
+    <div class="tiles-grid">
+        <div class="bid-tile" onclick="setStep(10, this)">+10</div>
+        <div class="bid-tile" onclick="setStep(20, this)">+20</div>
+        <div class="bid-tile" onclick="setStep(50, this)">+50</div>
+        <div class="bid-tile" onclick="setStep(100, this)">+100</div>
+        <div class="bid-tile" onclick="setStep(200, this)">+200</div>
+        <div class="bid-tile" onclick="setStep(500, this)">+500</div>
+    </div>
+
+    <div class="bid-form">
+        <input type="text" id="nameField" placeholder="Imię i Nazwisko">
+        <input type="tel" id="phoneField" placeholder="Numer telefonu">
+        <div id="newTotal" style="text-align: center; margin: 20px 0; font-family: 'Oswald'; font-size: 2.2rem; color: var(--eagle-red);">Twoja oferta: ---</div>
+        <button class="submit-btn" id="btnSubmit" onclick="submitBid()">PRZEBIJAM I POMAGAM 🦅</button>
+    </div>
+
+    <div class="history-box">
+        <h3 style="font-family: 'Oswald'; text-transform: uppercase; letter-spacing: 2px; margin-top: 0;">Ostatnie oferty</h3>
+        <div id="bidHistory">Pobieranie danych...</div>
+    </div>
+</div>
+
+<script>
+    const script_URL = "https://script.google.com/macros/s/AKfycbz9DigfxI_cTnqk1wW19McNGD7MFsxDWEJ_rvuNlCot/exec"; 
+    const endDate = new Date("March 29, 2026 22:00:00").getTime();
+  
+    let currentPrice = 0;
+    let selectedStep = 0;
+
+    async function fetchBids() {
+        try {
+            const res = await fetch(script_URL);
+            const data = await res.json();
+            
+            if(data && data.length > 0) {
+                // Znajdowanie najwyższej ceny i lidera (Highest Bid)
+                let highestBidObj = data.reduce((prev, current) => {
+                    return (parseInt(prev.bid) > parseInt(current.bid)) ? prev : current;
+                });
+
+                currentPrice = parseInt(highestBidObj.bid);
+                document.getElementById('displayPrice').innerText = currentPrice;
+                
+                const firstName = highestBidObj.name ? highestBidObj.name.split(' ')[0] : "Anonim";
+                document.getElementById('leaderName').innerHTML = `Aktualny lider: <span style="color:var(--eagle-red)">${firstName}</span>`;
+                
+                // Historia ofert (Od najnowszej wpisanej w arkusz na górę)
+                const historyDiv = document.getElementById('bidHistory');
+                historyDiv.innerHTML = "";
+                
+                const recentBids = [...data].reverse().slice(0, 6); 
+                
+                recentBids.forEach(b => {
+                    const row = document.createElement('div');
+                    row.className = 'history-row';
+                    const displayFirstName = b.name ? b.name.split(' ')[0] : "Anonim";
+                    row.innerHTML = `<span>${displayFirstName}</span><strong>${b.bid} PLN</strong>`;
+                    historyDiv.appendChild(row);
+                });
+            }
+        } catch(e) { console.error("Błąd pobierania."); }
+    }
+
+    function setStep(val, el) {
+        selectedStep = val;
+        document.getElementById('newTotal').innerText = "Twoja oferta: " + (currentPrice + val) + " PLN";
+        document.querySelectorAll('.bid-tile').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    async function submitBid() {
+        const name = document.getElementById('nameField').value.trim();
+        const phone = document.getElementById('phoneField').value.trim();
+        if(!name || !phone || selectedStep === 0) return alert("Uzupełnij imię, telefon i kwotę!");
+
+        const btn = document.getElementById('btnSubmit');
+        const offerAmount = currentPrice + selectedStep;
+        
+        btn.disabled = true; 
+        btn.innerText = "PRZETWARZANIE...";
+
+        const payload = JSON.stringify({
+            "name": name, 
+            "phone": phone, 
+            "bid": offerAmount, 
+            "time": new Date().toLocaleString()
+        });
+
+        try {
+            await fetch(script_URL, { method: 'POST', mode: 'no-cors', body: payload });
+            setTimeout(fetchBids, 600); // Odśwież po wysłaniu
+            document.getElementById('thanks-modal').classList.add('active');
+        } catch(e) { 
+            alert("Błąd. Spróbuj ponownie."); 
+            btn.disabled = false; 
+            btn.innerText = "PRZEBIJAM I POMAGAM 🦅";
+        }
+    }
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = endDate - now;
+        if (distance < 0) { 
+            document.getElementById("countdown").innerHTML = "ZAKOŃCZONA"; 
+            document.getElementById("btnSubmit").disabled = true;
+            document.getElementById("btnSubmit").innerText = "AUKCJA ZAKOŃCZONA";
+            return; 
+        }
+        const d = Math.floor(distance / (1000*60*60*24));
+        const h = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+        const m = Math.floor((distance%(1000*60*60))/(1000*60));
+        const s = Math.floor((distance%(1000*60))/1000);
+        const pad = (n) => n < 10 ? "0" + n : n;
+        document.getElementById("countdown").innerHTML = `${d}d ${pad(h)}h ${pad(m)}m ${pad(s)}s`;
+    }
+
+    // Aktualizacja wszystkiego co 1 sekundę
+    fetchBids();
+    setInterval(fetchBids, 1000); 
+    setInterval(updateTimer, 1000);
+    updateTimer();
+</script>
+
 </body>
 </html>
