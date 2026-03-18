@@ -151,7 +151,7 @@
             </div>
             
             <div class="panel-box">
-                <h2 style="margin:0 0 25px 0; color:#444; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px;">5 Ostatnich Licytacji</h2>
+                <h2 style="margin:0 0 25px 0; color:#444; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px;">5 Najnowszych Licytacji</h2>
                 <div id="bidHistory">Ładowanie...</div>
             </div>
         </div>
@@ -172,13 +172,18 @@
 <script>
     const endDate = new Date("March 29, 2026 22:00:00").getTime();
     const sheetDB_URL = "https://sheetdb.io/api/v1/q26o9bn9mcffp";
-    let currentPrice = 0;
+    const START_PRICE = 100; // Cena wywoławcza
+    let currentPrice = START_PRICE;
     let selectedStep = 0;
 
     function updateTimer() {
         const now = new Date().getTime();
         const distance = endDate - now;
-        if (distance < 0) { document.getElementById("countdown").innerHTML = "AUKCJA ZAKOŃCZONA"; return; }
+        if (distance < 0) { 
+            document.getElementById("countdown").innerHTML = "AUKCJA ZAKOŃCZONA"; 
+            document.getElementById("btnSubmit").disabled = true;
+            return; 
+        }
         const days = Math.floor(distance / (1000 * 60 * 60 * 24));
         const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -188,41 +193,42 @@
     }
     setInterval(updateTimer, 1000); updateTimer();
 
-    // NOWA FUNKCJA: Pobieranie danych przy starcie i co 10s
     async function refreshData() {
         try {
-            const response = await fetch(sheetDB_URL);
+            // Unikamy cache'owania za pomocą timestampa
+            const response = await fetch(`${sheetDB_URL}?_=${new Date().getTime()}`);
             const data = await response.json();
             
             if (data && data.length > 0) {
-                // Wyciągamy najwyższą ofertę
-                const bids = data.map(item => parseInt(item.bid));
-                const maxBid = Math.max(...bids);
+                // Filtrujemy tylko poprawne wiersze
+                const validBids = data.filter(item => item.bid && !isNaN(parseInt(item.bid)));
                 
-                if (maxBid > currentPrice) {
-                    currentPrice = maxBid;
+                if (validBids.length > 0) {
+                    // NAJWAŻNIEJSZE: Ostatni wiersz to aktualna najwyższa cena (bo formularz pilnuje podbić)
+                    const lastBidEntry = validBids[validBids.length - 1];
+                    currentPrice = parseInt(lastBidEntry.bid);
                     document.getElementById('displayPrice').innerText = currentPrice;
                     
-                    // Znajdujemy imię lidera
-                    const leader = data.find(item => parseInt(item.bid) === maxBid);
-                    if (leader) {
-                        document.getElementById('currentLeaderLabel').innerHTML = `Aktualna cena (PLN) | Prowadzi: <span style="color:white">${leader.name.split(' ')[0]}</span>`;
-                    }
-                }
+                    const leader = lastBidEntry.name ? lastBidEntry.name.split(' ')[0] : "Anonim";
+                    document.getElementById('currentLeaderLabel').innerHTML = 
+                        `Aktualna cena (PLN) | Prowadzi: <span style="color:white">${leader}</span>`;
 
-                // Aktualizacja historii (ostatnie 5)
-                const historyDiv = document.getElementById('bidHistory');
-                historyDiv.innerHTML = "";
-                data.slice(-5).reverse().forEach(b => {
-                    const entry = document.createElement('div');
-                    entry.className = 'history-entry';
-                    entry.innerHTML = `<span class="history-name">${b.name.split(' ')[0]}</span><span class="history-val">${b.bid} PLN</span>`;
-                    historyDiv.appendChild(entry);
-                });
+                    // HISTORIA: 5 najnowszych wierszy od góry
+                    const historyDiv = document.getElementById('bidHistory');
+                    historyDiv.innerHTML = "";
+                    
+                    const latestFive = validBids.slice(-5).reverse();
+                    latestFive.forEach(b => {
+                        const name = b.name ? b.name.split(' ')[0] : "Anonim";
+                        const entry = document.createElement('div');
+                        entry.className = 'history-entry';
+                        entry.innerHTML = `<span class="history-name">${name}</span><span class="history-val">${b.bid} PLN</span>`;
+                        historyDiv.appendChild(entry);
+                    });
+                }
             } else {
-                currentPrice = 100; // Cena wywoławcza jeśli arkusz pusty
-                document.getElementById('displayPrice').innerText = currentPrice;
-                document.getElementById('bidHistory').innerText = "Bądź pierwszy!";
+                document.getElementById('displayPrice').innerText = START_PRICE;
+                document.getElementById('bidHistory').innerHTML = "<div style='padding:20px; color:#555;'>Bądź pierwszy!</div>";
             }
         } catch (error) {
             console.error("Błąd pobierania danych:", error);
@@ -231,14 +237,17 @@
 
     window.onload = function() {
         refreshData();
-        setInterval(refreshData, 10000); // Odświeżaj co 10 sek
+        setInterval(refreshData, 8000); // Odświeżaj co 8 sek
         const savedName = localStorage.getItem('bidderName');
         const savedPhone = localStorage.getItem('bidderPhone');
         if(savedName) document.getElementById('nameField').value = savedName;
         if(savedPhone) document.getElementById('phoneField').value = savedPhone;
     };
 
-    function openLightbox(url) { document.getElementById('lightbox-img').src = url; document.getElementById('lightbox').classList.add('active'); }
+    function openLightbox(url) { 
+        document.getElementById('lightbox-img').src = url; 
+        document.getElementById('lightbox').classList.add('active'); 
+    }
     
     function setStep(val, el) {
         selectedStep = val;
@@ -248,40 +257,55 @@
     }
 
     async function submitBid() {
-        const fullInput = document.getElementById('nameField').value.trim();
-        const p = document.getElementById('phoneField').value.trim();
-        if(!fullInput || !p || selectedStep === 0) { alert("Wypełnij dane i wybierz kwotę!"); return; }
+        const name = document.getElementById('nameField').value.trim();
+        const phone = document.getElementById('phoneField').value.trim();
+        
+        // Krytyczne: pobierz świeżą cenę przed wysłaniem
+        await refreshData();
+
+        if(!name || !phone || selectedStep === 0) { 
+            alert("Uzupełnij dane i wybierz kwotę podbicia!"); 
+            return; 
+        }
         
         const finalBid = currentPrice + selectedStep;
         const btn = document.getElementById('btnSubmit');
-        btn.disabled = true; btn.innerText = "PRZESYŁANIE...";
+        
+        btn.disabled = true; 
+        btn.innerText = "ZAPISYWANIE...";
 
         try {
             const response = await fetch(sheetDB_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ "data": [{ "name": fullInput, "phone": p, "bid": finalBid, "time": new Date().toLocaleString() }] })
+                body: JSON.stringify({ 
+                    "data": [{ 
+                        "name": name, 
+                        "phone": `'${phone}`, 
+                        "bid": finalBid, 
+                        "time": new Date().toLocaleString('pl-PL') 
+                    }] 
+                })
             });
 
             if(response.ok) {
-                localStorage.setItem('bidderName', fullInput);
-                localStorage.setItem('bidderPhone', p);
+                localStorage.setItem('bidderName', name);
+                localStorage.setItem('bidderPhone', phone);
                 
-                document.getElementById('thanks-name').innerText = fullInput.split(' ')[0].toUpperCase() + "!";
+                document.getElementById('thanks-name').innerText = name.split(' ')[0].toUpperCase() + "!";
                 document.getElementById('thanks-modal').classList.add('active');
                 
-                // Reset formularza
+                selectedStep = 0;
                 document.getElementById('newTotal').innerText = "Suma: --- PLN";
                 document.querySelectorAll('.bid-tile').forEach(t => t.classList.remove('active'));
-                selectedStep = 0;
                 
-                // Natychmiastowe odświeżenie ceny
-                setTimeout(refreshData, 1500);
+                setTimeout(refreshData, 1000);
             }
         } catch (error) {
-            alert("Błąd połączenia. Spróbuj ponownie.");
+            alert("Błąd połączenia.");
         } finally {
-            btn.disabled = false; btn.innerText = "Potwierdź licytację";
+            btn.disabled = false; 
+            btn.innerText = "Potwierdź licytację";
         }
     }
 </script>
