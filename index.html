@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
-    <meta property="og:title" content="Wielkie Serce dla Maksa | Licytacja Koszulki Krzysztofa Ratajskiego">
+    <meta property="og:title" content="Wielkie Serce dla Maksa 💖| Licytacja Koszulki Krzysztofa Ratajskiego">
     <meta property="og:description" content="Dołącz Do Druzyny Maksia">
     <meta property="og:image" content="https://i.imgur.com/uBvXqR3.jpg">
     <meta property="og:type" content="website">
@@ -73,9 +73,29 @@
         .gallery-item { 
             border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border);
             background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
         }
-        .gallery-item img { width: 100%; height: 100%; object-fit: contain; padding: 15px; }
+        .gallery-item img { 
+            width: 100%; height: 100%; object-fit: contain; padding: 15px; 
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(225, 29, 72, 0.3);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+
         .main-img { grid-row: span 2; }
+
+        #imgModal {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 2000; align-items: center; justify-content: center;
+            backdrop-filter: blur(10px); cursor: zoom-out;
+        }
+        #imgModal img { max-width: 95%; max-height: 95%; border-radius: 10px; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
 
         .bid-card {
             background: var(--glass); border: 1px solid var(--glass-border);
@@ -110,9 +130,15 @@
             width: 100%; padding: 25px; background: #fff; color: #000;
             border: none; border-radius: 20px; font-weight: 800; font-size: 1.2rem;
             cursor: pointer; transition: 0.4s; text-transform: uppercase;
+            animation: pulsate 2s infinite ease-in-out;
         }
 
-        /* DODANE SEKCJE NA DOLE - SZEROKIE NA CAŁY EKRAN */
+        @keyframes pulsate {
+            0% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0.7); transform: scale(1); }
+            70% { box-shadow: 0 0 0 20px rgba(225, 29, 72, 0); transform: scale(1.02); }
+            100% { box-shadow: 0 0 0 0 rgba(225, 29, 72, 0); transform: scale(1); }
+        }
+
         .wide-info-section {
             background: var(--glass); border: 1px solid var(--glass-border);
             border-radius: 32px; padding: 40px; margin-top: 20px;
@@ -124,7 +150,6 @@
         @media (max-width: 600px) {
             .gallery { grid-template-columns: 1fr; grid-template-rows: 350px 200px 200px; }
             .main-img { grid-row: span 1; }
-            .prizes { grid-template-columns: 1fr; }
             .current-price { font-size: 4rem; }
         }
 
@@ -135,9 +160,13 @@
 
 <div class="bg-glow"></div>
 
+<div id="imgModal" onclick="this.style.display='none'">
+    <img id="fullImg">
+</div>
+
 <div id="modal">
     <div style="text-align: center; padding: 40px; max-width: 500px;">
-        <h1 style="color: var(--primary); margin-bottom: 15px;">DZIĘKUJEMY! ❤️</h1>
+        <h1 style="color: var(--primary); margin-bottom: 15px;">DZIĘKUJEMY! 💖</h1>
         <p style="color: #aaa; font-size: 1.1rem;">Twoja oferta została zarejestrowana.</p>
         <button class="submit-btn" style="margin-top: 30px; width: auto; padding: 15px 50px;" onclick="location.reload()">POWRÓT</button>
     </div>
@@ -145,7 +174,7 @@
 
 <div class="container">
     <header>
-        <div class="badge">Wielkie Serce dla Maksa! ❤️</div>
+        <div class="badge">Wielkie Serce dla Maksa! 💖</div>
         <h1>Licytuj koszulkę Mistrza<br>Krzysztofa Ratajskiego! 🦅</h1>
     </header>
 
@@ -168,9 +197,9 @@
     </section>
 
     <div class="gallery">
-        <div class="gallery-item main-img"><img src="https://i.imgur.com/mqHTrpl.png"></div>
-        <div class="gallery-item"><img src="https://i.imgur.com/DgtpxXi.png"></div>
-        <div class="gallery-item"><img src="https://i.imgur.com/K5dzFXw.jpg"></div>
+        <div class="gallery-item main-img" onclick="openImg(this)"><img src="https://i.imgur.com/mqHTrpl.png"></div>
+        <div class="gallery-item" onclick="openImg(this)"><img src="https://i.imgur.com/DgtpxXi.png"></div>
+        <div class="gallery-item" onclick="openImg(this)"><img src="https://i.imgur.com/K5dzFXw.jpg"></div>
     </div>
 
     <div class="bid-card">
@@ -183,12 +212,12 @@
         </div>
 
         <div class="tiles">
+            <div class="tile" onclick="setStep(10, this)">+10</div>
             <div class="tile" onclick="setStep(20, this)">+20</div>
             <div class="tile" onclick="setStep(50, this)">+50</div>
             <div class="tile" onclick="setStep(100, this)">+100</div>
             <div class="tile" onclick="setStep(200, this)">+200</div>
             <div class="tile" onclick="setStep(500, this)">+500</div>
-            <div class="tile" onclick="setStep(1000, this)">+1000</div>
         </div>
 
         <input type="text" id="nameField" placeholder="Imię i Nazwisko">
@@ -205,17 +234,17 @@
     </div>
 
     <div class="wide-info-section">
-        <p>Otwórzmy serca i pokażmy siłę darterskiej społeczności! 
+        <p>Otwórzmy serca i pokażmy siłę darterskiej społeczności 💖
         
-        Licytuj odważnie – dla Ciebie to piękna pamiątka, dla Maksa to bezcenna pomoc. 🚀❤️
+        Licytuj odważnie 💪 – dla Ciebie to piękna pamiątka, dla Maksa to bezcenna pomoc. 🚀❤️
         Licytujemy o min 10 dyszkę więcej. Wygrywa najwyższa oferta złożona w stosownym czasie. Po zakończeniu licytacji skontaktujemy się ze zwycięzcą. W przypadku wycofania się osoby , która zwyciężyła nagroda zostanie przekazana do kolejnej osoby z najwyższą wylicytowaną kwotą. 
         
         Dostawa: 
-        Koszulkę wysyłamy za pobraniem ewentualnie istnieje możliwość odbioru osobiście w Częstochowie po wcześniejszym kontakcie telefonicznym</p>
+        Koszulkę wysyłamy 🚚 za pobraniem ewentualnie istnieje możliwość odbioru osobiście w Częstochowie po wcześniejszym kontakcie telefonicznym</p>
     </div>
 
-    <footer style="text-align: center; padding: 40px; color: #333; font-size: 0.9rem;">
-        &copy; 2026 Wielkie Serce dla Maksa 
+    <footer style="text-align: center; padding: 40px; color: #333; font-size: 0.7rem;">
+        &copy; 2026 Wielkie Serce dla Maksa 💖 !!
     </footer>
 </div>
 
@@ -223,6 +252,12 @@
     const script_URL = "https://script.google.com/macros/s/AKfycbwsTtHRj6YZRE3QWLHpsuSj8XgGZs9LHAc1Jtxj9gMmZgdTc3MYO7_3REs8CC8Xg0880A/exec"; 
     const endDate = new Date("March 29, 2026 22:00:00").getTime();
     let currentPrice = 0, selectedStep = 0;
+
+    function openImg(el) {
+        const src = el.querySelector('img').src;
+        document.getElementById('fullImg').src = src;
+        document.getElementById('imgModal').style.display = 'flex';
+    }
 
     async function fetchBids() {
         try {
@@ -235,7 +270,7 @@
                 const historyList = document.getElementById('bidHistoryList');
                 historyList.innerHTML = "";
                 data.slice(-5).reverse().forEach(item => {
-                    const firstName = item.name.trim().split(' ')[0]; // SAMO IMIĘ
+                    const firstName = item.name.trim().split(' ')[0];
                     historyList.innerHTML += `<div class="history-item"><strong>${firstName}</strong><span style="color:var(--primary);font-weight:800">${item.bid} zł</span></div>`;
                 });
             }
@@ -270,7 +305,7 @@
         document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
     }
 
-    setInterval(updateTimer, 1000); setInterval(fetchBids, 5000);
+    setInterval(updateTimer, 1000); setInterval(fetchBids, 1000);
     fetchBids(); updateTimer();
 </script>
 </body>
