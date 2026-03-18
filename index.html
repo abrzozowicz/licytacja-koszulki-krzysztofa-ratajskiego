@@ -3,90 +3,326 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Eagle Auction | Konserwacja</title>
-    <meta property="og:title" content="Eagle Auction | Chwilowa Przerwa Techniczna 🦅">
-    <meta property="og:description" content="Trwa konserwacja strony licytacji dla Maksa. Wrócimy za kilka chwil!">
-    <meta property="og:image" content="https://i.imgur.com/uBvXqR3_d.jpeg">
+    
+    <meta property="og:title" content="Wielkie Serce dla Maksa | Licytacja Koszulki Krzysztofa Ratajskiego">
+    <meta property="og:description" content="Dołącz Do Druzyny Maksia">
+    <meta property="og:image" content="https://i.imgur.com/uBvXqR3.jpg">
+    <meta property="og:url" content="TUTAJ_WKLEJ_LINK_DO_TWOJEJ_STRONY">
+    <meta property="og:type" content="website">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://i.imgur.com/uBvXqR3.jpg">
 
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>Wielkie Serce dla Maksa | Krzysztof Ratajski</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --eagle-red: #d63031;
-            --eagle-white: #ffffff;
-            --bg-dark: #0a0a0a;
-            --card-bg: #111;
-            --border: #222;
+            --primary: #e11d48; 
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
+
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            margin: 0; padding: 0; background: var(--bg-dark); color: var(--eagle-white); 
-            font-family: 'Inter', sans-serif; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-            height: 100vh; width: 100vw;
+            margin: 0; background: #000; color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            min-height: 100vh; overflow-x: hidden;
         }
 
-        /* Tło Patriotyczne - Gradient Biało-Czerwony */
-        .hero-header {
-            width: 100%; height: 100%; text-align: center;
-            background: linear-gradient(135deg, #d63031 0%, #8b0000 50%, #ffffff 100%);
-            border-bottom: 5px solid var(--eagle-red);
-            position: absolute; top: 0; left: 0; z-index: 1;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            padding: 40px;
+        .bg-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background: radial-gradient(circle at 15% 15%, rgba(225, 29, 72, 0.15) 0%, transparent 45%),
+                        radial-gradient(circle at 85% 85%, rgba(255, 255, 255, 0.05) 0%, transparent 40%);
         }
 
-        /* Główne Pudełko (Karta) */
-        .maintenance-card {
-            background: var(--card-bg); border-top: 5px solid var(--eagle-red);
-            padding: 50px 30px; border-radius: 20px;
-            box-shadow: 0 15px 45px rgba(0,0,0,0.7); text-align: center;
-            position: relative; z-index: 10; max-width: 600px; width: 90%;
-            border: 1px solid var(--border);
+        .container { max-width: 900px; margin: 0 auto; padding: 40px 20px; }
+
+        header { text-align: center; margin-bottom: 40px; }
+        .badge { 
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 8px 20px; border-radius: 100px; font-size: 0.7rem;
+            letter-spacing: 3px; font-weight: 800; color: var(--primary);
+            display: inline-block; margin-bottom: 20px; text-transform: uppercase;
+        }
+        h1 { font-size: clamp(1.8rem, 7vw, 3.2rem); margin: 0; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
+
+        .manifesto {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 32px; padding: 35px; margin: 30px 0;
+            backdrop-filter: blur(15px); text-align: center;
+        }
+        .manifesto p { line-height: 1.8; color: #ccc; font-size: 1.05rem; margin-bottom: 25px; }
+        .manifesto strong { color: #fff; }
+
+        .timer-grid { 
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; 
+            max-width: 450px; margin: 20px auto; 
+        }
+        .timer-item { background: rgba(225, 29, 72, 0.1); border: 1px solid rgba(225, 29, 72, 0.2); padding: 15px 5px; border-radius: 18px; }
+        .timer-val { font-size: 1.6rem; font-weight: 800; display: block; color: var(--primary); }
+        .timer-label { font-size: 0.6rem; opacity: 0.6; font-weight: 700; text-transform: uppercase; }
+
+        .prizes { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0; }
+        .prize-item {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            padding: 20px; border-radius: 20px; text-align: center;
+        }
+        .prize-icon { font-size: 1.5rem; display: block; margin-bottom: 10px; }
+
+        .gallery { 
+            display: grid; grid-template-columns: 1.8fr 1fr; grid-template-rows: 250px 250px; 
+            gap: 15px; margin-bottom: 40px; 
+        }
+        .gallery-item { 
+            border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border);
+            background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
+        }
+        .gallery-item img { width: 100%; height: 100%; object-fit: contain; padding: 15px; }
+        .main-img { grid-row: span 2; }
+
+        .bid-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 40px; padding: 50px 20px; backdrop-filter: blur(25px);
+            text-align: center; margin-bottom: 40px; border-top: 4px solid var(--primary);
+        }
+        .current-price { font-size: 5rem; font-weight: 800; margin: 5px 0; letter-spacing: -4px; color: #fff; }
+
+        .history-box {
+            max-width: 450px; margin: 30px auto; padding: 25px;
+            background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid var(--glass-border);
+        }
+        .history-title { font-size: 0.7rem; font-weight: 800; color: var(--primary); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; }
+        .history-item { 
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 1rem;
+        }
+        .history-name { color: #fff; font-weight: 700; }
+        .history-bid { color: var(--primary); font-weight: 800; }
+
+        .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 30px 0; }
+        .tile {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
+            padding: 20px; border-radius: 18px; font-weight: 700; cursor: pointer; transition: 0.3s; color: #888;
+        }
+        .tile.active { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 0 30px rgba(225, 29, 72, 0.4); }
+
+        input {
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            padding: 22px; border-radius: 20px; color: white; margin-bottom: 15px;
+            font-size: 1.1rem; font-family: inherit; outline: none;
+        }
+        input:focus { border-color: var(--primary); }
+
+        .submit-btn {
+            width: 100%; padding: 25px; background: #fff; color: #000;
+            border: none; border-radius: 20px; font-weight: 800; font-size: 1.2rem;
+            cursor: pointer; transition: 0.4s; text-transform: uppercase;
+        }
+        .submit-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(255,255,255,0.1); }
+
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
+        .info-box { background: var(--glass); border: 1px solid var(--glass-border); padding: 25px; border-radius: 28px; backdrop-filter: blur(10px); text-align: left; }
+        .info-box h3 { color: var(--primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 0; }
+        .info-box ul, .info-box p { font-size: 0.85rem; line-height: 1.6; color: #aaa; margin: 0; padding: 0; list-style: none; }
+
+        @media (max-width: 600px) {
+            .gallery { grid-template-columns: 1fr; grid-template-rows: 350px 200px 200px; }
+            .main-img { grid-row: span 1; }
+            .prizes, .info-grid { grid-template-columns: 1fr; }
+            .current-price { font-size: 4rem; }
         }
 
-        /* Nagłówek i Tekst */
-        .maintenance-card h1 { 
-            font-family: 'Oswald', sans-serif; font-size: clamp(2.5rem, 8vw, 4.5rem); 
-            margin: 0; text-transform: uppercase; letter-spacing: -2px; line-height: 1;
-            color: white; text-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            margin-bottom: 20px;
-        }
-
-        .maintenance-card p { 
-            color: rgba(255,255,255,0.9); font-weight: 900; letter-spacing: 5px; 
-            font-size: 1.1rem; margin-bottom: 10px; text-transform: uppercase;
-        }
-
-        .maintenance-card h2 { 
-            color: rgba(255,255,255,0.7); font-weight: 400; 
-            font-size: 1.3rem; margin-top: 10px; margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        /* Stopka */
-        .subtitle { color: #333; font-weight: 800; letter-spacing: 1px; margin-bottom: 15px; }
-        
-        /* Grafika Darterska (Opcjonalna - Np. Lotki w Tarczy) */
-        .darts-icon { font-size: 3rem; margin-top: 20px; color: var(--eagle-red); }
-
-        @media (max-width: 768px) {
-            .maintenance-card { padding: 40px 20px; }
-        }
+        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
     </style>
 </head>
 <body>
 
-<div class="hero-header">
-    <div class="maintenance-card">
-        <p>Konserwacja Strony</p>
-        <h1>Trwa Przerwa Techniczna</h1>
-        
-        <h2>Pracujemy nad usprawnieniami.<br>Wrócimy z większą siłą za kilka chwil! 🚀🦅</h2>
-        
-        <div class="subtitle">Aukcja Charytatywna</div>
-        <div class="darts-icon">🎯🦅 dart 🎯🦅</div>
+<div class="bg-glow"></div>
+
+<div id="modal">
+    <div style="text-align: center; padding: 40px; max-width: 500px;">
+        <h1 style="color: var(--primary); margin-bottom: 15px;">DZIĘKUJEMY! ❤️</h1>
+        <p style="color: #aaa; font-size: 1.1rem; line-height: 1.6;">Twoja oferta została zarejestrowana. Każda złotówka przybliża nas do zwycięstwa w tym najważniejszym meczu!</p>
+        <button class="submit-btn" style="margin-top: 30px; width: auto; padding: 15px 50px;" onclick="location.reload()">POWRÓT</button>
     </div>
 </div>
+
+<div class="container">
+    <header>
+        <div class="badge">Wielkie Serce dla Maksa! ❤️</div>
+        <h1>Licytuj koszulkę Mistrza<br>Krzysztofa Ratajskiego! 🦅</h1>
+    </header>
+
+    <section class="manifesto">
+        <p>
+            Darta kocha się za emocje, ale dzisiaj te emocje towarzyszą nam w walce o zdrowie <strong>Maksymiliana Mazurka</strong>. 
+            Zapraszamy do licytacji wyjątkowego zestawu od najlepszego polskiego dartera, <strong>Krzysztofa Ratajskiego</strong>, 
+            z której całkowity dochód wesprze Maksa w jego walce!
+        </p>
+        
+        <div style="font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 15px; color: var(--primary); font-weight: 800;">Finał za:</div>
+        <div class="timer-grid">
+            <div class="timer-item"><span class="timer-val" id="d">00</span><span class="timer-label">Dni</span></div>
+            <div class="timer-item"><span class="timer-val" id="h">00</span><span class="timer-label">Godz</span></div>
+            <div class="timer-item"><span class="timer-val" id="m">00</span><span class="timer-label">Min</span></div>
+            <div class="timer-item"><span class="timer-val" id="s">00</span><span class="timer-label">Sek</span></div>
+        </div>
+
+        <div class="prizes">
+            <div class="prize-item">
+                <i class="prize-icon">👕</i>
+                <strong>Koszulka "Polish Eagle"</strong><br>
+                <small style="color:#666">Z autografem Mistrza</small>
+            </div>
+            <div class="prize-item">
+                <i class="prize-icon">🎯</i>
+                <strong>Komplet piórek</strong><br>
+                <small style="color:#666">Z autografem Mistrza</small>
+            </div>
+        </div>
+        
+        <p style="font-size: 0.95rem; margin-top: 20px;">
+            To nie tylko gratka dla kolekcjonera, ale przede wszystkim <strong>realna cegiełka</strong> dołożona do zdrowia i przyszłości Maksymiliana.
+        </p>
+    </section>
+
+    <div class="gallery">
+        <div class="gallery-item main-img"><img src="https://i.imgur.com/mqHTrpl.png" alt="Mistrz"></div>
+        <div class="gallery-item"><img src="https://i.imgur.com/DgtpxXi.png" alt="Koszulka"></div>
+        <div class="gallery-item"><img src="https://i.imgur.com/K5dzFXw.jpg" alt="Zdjęcie Licytacji"></div>
+    </div>
+
+    <div class="bid-card">
+        <div style="font-size: 0.75rem; font-weight: 800; color: #666; letter-spacing: 5px;">AKTUALNA CENA</div>
+        <div class="current-price" id="displayPrice">0</div>
+        <div style="font-weight: 800; color: var(--primary); letter-spacing: 3px; margin-bottom: 30px;">PLN</div>
+
+        <div class="history-box">
+            <div class="history-title">Ostatnie 5 licytacji</div>
+            <div id="bidHistoryList">
+                <div style="color: #444; font-size: 0.85rem; padding: 10px;">Pobieranie aktualnych ofert...</div>
+            </div>
+        </div>
+
+        <div class="tiles">
+            <div class="tile" onclick="setStep(10, this)">+10</div>
+            <div class="tile" onclick="setStep(20, this)">+20</div>
+            <div class="tile" onclick="setStep(50, this)">+50</div>
+            <div class="tile" onclick="setStep(100, this)">+100</div>
+            <div class="tile" onclick="setStep(200, this)">+200</div>
+            <div class="tile" onclick="setStep(500, this)">+500</div>
+        </div>
+
+        <input type="text" id="nameField" placeholder="Imię i Nazwisko">
+        <input type="tel" id="phoneField" placeholder="Numer telefonu dla potwierdzenia">
+        
+        <div id="newTotal" style="margin: 20px 0; font-weight: 700; font-size: 1.1rem; color: #666;">Twoja oferta: ---</div>
+        
+        <button class="submit-btn" id="btnSubmit" onclick="submitBid()">Licytuj dla Maksa! 🚀</button>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <h3>📜 Zasady Licytacji</h3>
+            <ul>
+                <li style="margin-bottom: 8px;">• Licytujemy o minimum <strong>10 zł więcej</strong>.</li>
+                <li style="margin-bottom: 8px;">• Wygrywa najwyższa oferta złożona w stosownym czasie.</li>
+                <li style="margin-bottom: 8px;">• Finał: <strong>29 marca, godz. 22:00</strong>.</li>
+                <li>• W przypadku wycofania, nagroda trafia do kolejnej osoby.</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>📦 Dostawa i Odbiór</h3>
+            <p>
+                Koszulkę wysyłamy <strong>za pobraniem</strong>. <br><br>
+                Możliwy <strong>odbiór osobisty w Częstochowie</strong> po wcześniejszym kontakcie telefonicznym.
+            </p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 50px; padding: 40px; border-top: 1px solid rgba(255,255,255,0.05);">
+        <h2 style="font-size: 1.2rem; color: #fff; margin-bottom: 10px;">Otwórzmy serca i pokażmy siłę darterskiej społeczności! 🎯</h2>
+        <p style="color: #666; font-size: 0.9rem; line-height: 1.6;">
+            Licytuj odważnie – dla Ciebie to piękna pamiąka, dla Maksa to bezcenna pomoc. 🚀❤️<br>
+            W darcie liczy się precyzja, a w pomaganiu – czas! Nie czekaj do ostatniej lotki.
+        </p>
+    </div>
+
+    <footer style="text-align: center; padding: 20px; color: #333; font-size: 0.7rem;">
+        &copy; 2026 Wielkie Serce dla Maksa | Krzysztof Ratajski Fundraiser
+    </footer>
+</div>
+
+<script>
+    const script_URL = "https://script.google.com/macros/s/AKfycbwsTtHRj6YZRE3QWLHpsuSj8XgGZs9LHAc1Jtxj9gMmZgdTc3MYO7_3REs8CC8Xg0880A/exec"; 
+    const endDate = new Date("March 29, 2026 22:00:00").getTime();
+    let currentPrice = 0;
+    let selectedStep = 0;
+
+    async function fetchBids() {
+        try {
+            const res = await fetch(script_URL);
+            const data = await res.json();
+            if(data && data.length > 0) {
+                const bids = data.map(b => parseFloat(b.bid)).filter(b => !isNaN(b));
+                currentPrice = Math.max(...bids);
+                document.getElementById('displayPrice').innerText = currentPrice.toLocaleString();
+
+                const historyList = document.getElementById('bidHistoryList');
+                historyList.innerHTML = "";
+                const latestBids = data.slice(-5).reverse();
+                latestBids.forEach(item => {
+                    historyList.innerHTML += `
+                        <div class="history-item">
+                            <span class="history-name">${item.name}</span>
+                            <span class="history-bid">${item.bid} zł</span>
+                        </div>
+                    `;
+                });
+            }
+        } catch(e) { console.error("Błąd połączenia."); }
+    }
+
+    function setStep(val, el) {
+        selectedStep = val;
+        document.getElementById('newTotal').innerText = "Twoja oferta: " + (currentPrice + val).toLocaleString() + " PLN";
+        document.getElementById('newTotal').style.color = "#fff";
+        document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    async function submitBid() {
+        const name = document.getElementById('nameField').value.trim();
+        const phone = document.getElementById('phoneField').value.trim();
+        if(!name || !phone || selectedStep === 0) return alert("Podaj dane i wybierz kwotę!");
+
+        const btn = document.getElementById('btnSubmit');
+        btn.disabled = true; btn.innerText = "PRZESYŁANIE...";
+
+        try {
+            await fetch(script_URL, {
+                method: 'POST', mode: 'no-cors',
+                body: JSON.stringify({ "name": name, "phone": phone, "bid": currentPrice + selectedStep })
+            });
+            document.getElementById('modal').style.display = 'flex';
+        } catch(e) { alert("Błąd zapisu!"); btn.disabled = false; }
+    }
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = endDate - now;
+        if(diff < 0) return;
+        document.getElementById("d").innerText = Math.floor(diff / (1000*60*60*24)).toString().padStart(2,'0');
+        document.getElementById("h").innerText = Math.floor((diff%(1000*60*60*24))/(1000*60*60)).toString().padStart(2,'0');
+        document.getElementById("m").innerText = Math.floor((diff%(1000*60*60))/(1000*60)).toString().padStart(2,'0');
+        document.getElementById("s").innerText = Math.floor((diff%(1000*60))/1000).toString().padStart(2,'0');
+    }
+
+    setInterval(updateTimer, 1000);
+    setInterval(fetchBids, 3000); // Odświeżanie co 3 sekundy dla lepszej dynamiki
+    fetchBids(); updateTimer();
+</script>
 
 </body>
 </html>
