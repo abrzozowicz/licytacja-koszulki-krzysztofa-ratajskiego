@@ -112,7 +112,6 @@
             cursor: pointer; transition: 0.4s; text-transform: uppercase;
         }
 
-        /* DODANE SEKCJE NA DOLE - SZEROKIE NA CAŁY EKRAN */
         .wide-info-section {
             background: var(--glass); border: 1px solid var(--glass-border);
             border-radius: 32px; padding: 40px; margin-top: 20px;
@@ -253,6 +252,11 @@
         const name = document.getElementById('nameField').value.trim();
         const phone = document.getElementById('phoneField').value.trim();
         if(!name || !phone || selectedStep === 0) return alert("Podaj dane!");
+        
+        // ZAPAMIĘTYWANIE DANYCH
+        localStorage.setItem('bidderName', name);
+        localStorage.setItem('bidderPhone', phone);
+        
         const btn = document.getElementById('btnSubmit');
         btn.disabled = true; btn.innerText = "PRZESYŁANIE...";
         try {
@@ -261,51 +265,55 @@
         } catch(e) { btn.disabled = false; }
     }
 
-   function updateTimer() {
-    const now = new Date().getTime();
-    const diff = endDate - now;
-    
-    // Sprawdzamy czy czas minął
-    if (diff <= 0) {
-        document.getElementById("d").innerText = "00";
-        document.getElementById("h").innerText = "00";
-        document.getElementById("m").innerText = "00";
-        document.getElementById("s").innerText = "00";
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = endDate - now;
+        
+        if (diff <= 0) {
+            document.getElementById("d").innerText = "00";
+            document.getElementById("h").innerText = "00";
+            document.getElementById("m").innerText = "00";
+            document.getElementById("s").innerText = "00";
 
-        // UKRYWANIE PRZYCISKU I DODANIE NAPISU
-        const btn = document.getElementById('btnSubmit');
-        if (btn) {
-            const container = btn.parentElement;
-            // Tworzymy stylowy napis końcowy
-            const endMessage = document.createElement('div');
-            endMessage.innerHTML = `
-                <div style="background: var(--glass); border: 2px solid var(--primary); 
-                            padding: 20px; border-radius: 20px; color: #fff; 
-                            font-weight: 800; font-size: 1.4rem; text-transform: uppercase;
-                            box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);">
-                    DZIĘKUJEMY ZA LICYTACJĘ! ❤️
-                </div>`;
-            
-            // Zamieniamy przycisk na napis
-            btn.replaceWith(endMessage);
-            
-            // Opcjonalnie: ukrywamy też kafle (+20, +50 itd.) i pola tekstowe
-            document.querySelector('.tiles').style.display = 'none';
-            document.getElementById('nameField').style.display = 'none';
-            document.getElementById('phoneField').style.display = 'none';
-            document.getElementById('newTotal').style.display = 'none';
+            const btn = document.getElementById('btnSubmit');
+            if (btn) {
+                const endMessage = document.createElement('div');
+                endMessage.innerHTML = `
+                    <div style="background: var(--glass); border: 2px solid var(--primary); 
+                                padding: 20px; border-radius: 20px; color: #fff; 
+                                font-weight: 800; font-size: 1.4rem; text-transform: uppercase;
+                                box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);">
+                        DZIĘKUJEMY ZA LICYTACJĘ! ❤️
+                    </div>`;
+                btn.replaceWith(endMessage);
+                document.querySelector('.tiles').style.display = 'none';
+                document.getElementById('nameField').style.display = 'none';
+                document.getElementById('phoneField').style.display = 'none';
+                document.getElementById('newTotal').style.display = 'none';
+            }
+            return;
         }
-        return;
+
+        document.getElementById("d").innerText = Math.floor(diff / 86400000).toString().padStart(2,'0');
+        document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2,'0');
+        document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
+        document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
     }
 
-    document.getElementById("d").innerText = Math.floor(diff / 86400000).toString().padStart(2,'0');
-    document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2,'0');
-    document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
-    document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
-}
+    // FUNKCJA WCZYTYWANIA DANYCH
+    function loadUserData() {
+        const savedName = localStorage.getItem('bidderName');
+        const savedPhone = localStorage.getItem('bidderPhone');
+        if (savedName) document.getElementById('nameField').value = savedName;
+        if (savedPhone) document.getElementById('phoneField').value = savedPhone;
+    }
 
-    setInterval(updateTimer, 1000); setInterval(fetchBids, 1000);
-    fetchBids(); updateTimer();
+    // START
+    loadUserData();
+    setInterval(updateTimer, 1000); 
+    setInterval(fetchBids, 1000);
+    fetchBids(); 
+    updateTimer();
 </script>
 </body>
 </html>
