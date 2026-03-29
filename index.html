@@ -261,14 +261,48 @@
         } catch(e) { btn.disabled = false; }
     }
 
-    function updateTimer() {
-        const diff = endDate - new Date().getTime();
-        if(diff < 0) return;
-        document.getElementById("d").innerText = Math.floor(diff / 86400000).toString().padStart(2,'0');
-        document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2,'0');
-        document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
-        document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
+   function updateTimer() {
+    const now = new Date().getTime();
+    const diff = endDate - now;
+    
+    // Sprawdzamy czy czas minął
+    if (diff <= 0) {
+        document.getElementById("d").innerText = "00";
+        document.getElementById("h").innerText = "00";
+        document.getElementById("m").innerText = "00";
+        document.getElementById("s").innerText = "00";
+
+        // UKRYWANIE PRZYCISKU I DODANIE NAPISU
+        const btn = document.getElementById('btnSubmit');
+        if (btn) {
+            const container = btn.parentElement;
+            // Tworzymy stylowy napis końcowy
+            const endMessage = document.createElement('div');
+            endMessage.innerHTML = `
+                <div style="background: var(--glass); border: 2px solid var(--primary); 
+                            padding: 20px; border-radius: 20px; color: #fff; 
+                            font-weight: 800; font-size: 1.4rem; text-transform: uppercase;
+                            box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);">
+                    DZIĘKUJEMY ZA LICYTACJĘ! ❤️
+                </div>`;
+            
+            // Zamieniamy przycisk na napis
+            btn.replaceWith(endMessage);
+            
+            // Opcjonalnie: ukrywamy też kafle (+20, +50 itd.) i pola tekstowe
+            document.querySelector('.tiles').style.display = 'none';
+            document.getElementById('nameField').style.display = 'none';
+            document.getElementById('phoneField').style.display = 'none';
+            document.getElementById('newTotal').style.display = 'none';
+        }
+        return;
     }
+
+    document.getElementById("d").innerText = Math.floor(diff / 86400000).toString().padStart(2,'0');
+    document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2,'0');
+    document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
+    document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
+}
 
     setInterval(updateTimer, 1000); setInterval(fetchBids, 1000);
     fetchBids(); updateTimer();
