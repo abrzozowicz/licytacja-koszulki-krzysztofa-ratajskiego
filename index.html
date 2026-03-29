@@ -218,22 +218,54 @@
     const endDate = new Date("March 29, 2026 22:00:00").getTime();
     let currentPrice = 0, selectedStep = 0;
 
-    async function fetchBids() {
+   async function fetchBids() {
         try {
             const res = await fetch(script_URL);
             const data = await res.json();
+            
             if(data && data.length > 0) {
-                const bids = data.map(b => parseFloat(b.bid)).filter(b => !isNaN(b));
-                currentPrice = Math.max(...bids);
-                document.getElementById('displayPrice').innerText = currentPrice.toLocaleString();
+                // 1. Granica czasowa: 29 marca, 22:00
+                const limitDate = new Date("March 29, 2026 22:00:00").getTime();
+
+                // 2. Obliczamy aktualną cenę TYLKO z ofert przed 22:00
+                const validBids = data
+                    .filter(item => new Date(item.timestamp || item.date).getTime() <= limitDate)
+                    .map(b => parseFloat(b.bid))
+                    .filter(b => !isNaN(b));
+                
+                if (validBids.length > 0) {
+                    currentPrice = Math.max(...validBids);
+                    document.getElementById('displayPrice').innerText = currentPrice.toLocaleString();
+                }
+
+                // 3. Wyświetlamy historię (w tym te po czasie)
                 const historyList = document.getElementById('bidHistoryList');
                 historyList.innerHTML = "";
+                
+                // Pobieramy 5 ostatnich licytacji (niezależnie od czasu)
                 data.slice(-5).reverse().forEach(item => {
-                    const firstName = item.name.trim().split(' ')[0]; // SAMO IMIĘ
-                    historyList.innerHTML += `<div class="history-item"><strong>${firstName}</strong><span style="color:var(--primary);font-weight:800">${item.bid} zł</span></div>`;
+                    const firstName = item.name.trim().split(' ')[0];
+                    const bidTime = new Date(item.timestamp || item.date).getTime();
+                    const isTooLate = bidTime > limitDate; // Sprawdzenie czy po 22:00
+                    
+                    const d = new Date(bidTime);
+                    const dateDisplay = `${d.getDate().toString().padStart(2, '0')}.${(d.getMonth() + 1).toString().padStart(2, '0')} o ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
+
+                    // Dodatkowy styl dla ofert po czasie
+                    const lateBadge = isTooLate ? `<span style="background:rgba(255,255,255,0.1); color:#ff4444; font-size:0.6rem; padding:2px 6px; border-radius:4px; margin-left:8px; border:1px solid #ff4444;">PO CZASIE</span>` : "";
+                    const opacity = isTooLate ? "opacity: 0.6;" : "";
+
+                    historyList.innerHTML += `
+                        <div class="history-item" style="flex-direction: column; align-items: flex-start; gap: 4px; ${opacity}">
+                            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
+                                <strong>${firstName} ${lateBadge}</strong>
+                                <span style="color:${isTooLate ? '#888' : 'var(--primary)'}; font-weight:800;">${item.bid} zł</span>
+                            </div>
+                            <div style="font-size: 0.7rem; color: #666;">📅 ${dateDisplay}</div>
+                        </div>`;
                 });
             }
-        } catch(e) {}
+        } catch(e) { console.error("Błąd licytacji:", e); }
     }
 
     function setStep(val, el) {
