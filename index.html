@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta property="og:title" content="Wielkie Serce dla Maksa | Licytacja Koszulki Krzysztofa Ratajskiego">
+    <meta property="og:title" content="Wielkie Serce dla Maksa | Licytacja ZAKOŃCZONA">
     <meta property="og:url" content="https://abrzozowicz.github.io/licytacja-koszulki-krzysztofa-ratajskiego/">
-    <meta property="og:description" content="Dołącz Do Druzyny Maksia">
+    <meta property="og:description" content="Dziękujemy za wsparcie Drużyny Maksia! ❤️">
     <meta property="og:image" content="https://i.imgur.com/uBvXqR3.jpg">
     <meta property="og:type" content="website">
     
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://i.imgur.com/uBvXqR3.jpg">
 
-    <title>Wielkie Serce dla Maksa | Krzysztof Ratajski</title>
+    <title>Wielkie Serce dla Maksa | Licytacja ZAKOŃCZONA</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -45,302 +45,163 @@
         }
         h1 { font-size: clamp(1.8rem, 7vw, 3.2rem); margin: 0; font-weight: 800; letter-spacing: -2px; line-height: 1.1; }
 
-        .manifesto {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 32px; padding: 35px; margin: 30px 0;
-            backdrop-filter: blur(15px); text-align: center;
-        }
-        .manifesto p { line-height: 1.8; color: #ccc; font-size: 1.05rem; margin-bottom: 25px; }
-
-        .timer-grid { 
-            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; 
-            max-width: 450px; margin: 20px auto; 
-        }
-        .timer-item { background: rgba(225, 29, 72, 0.1); border: 1px solid rgba(225, 29, 72, 0.2); padding: 15px 5px; border-radius: 18px; }
-        .timer-val { font-size: 1.6rem; font-weight: 800; display: block; color: var(--primary); }
-        .timer-label { font-size: 0.6rem; opacity: 0.6; font-weight: 700; text-transform: uppercase; }
-
-        .prizes { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0; }
-        .prize-item {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
-            padding: 20px; border-radius: 20px; text-align: center;
+        .hero-ended {
+            background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.85)), url('https://i.imgur.com/uBvXqR3.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 32px;
+            padding: 60px 35px;
+            margin: 30px 0;
+            border: 1px solid rgba(225, 29, 72, 0.3);
+            text-align: center;
+            box-shadow: 0 0 40px rgba(225, 29, 72, 0.15);
         }
 
-        .gallery { 
-            display: grid; grid-template-columns: 1.8fr 1fr; grid-template-rows: 250px 250px; 
-            gap: 15px; margin-bottom: 40px; 
-        }
-        .gallery-item { 
-            border-radius: 24px; overflow: hidden; border: 1px solid var(--glass-border);
-            background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center;
-        }
-        .gallery-item img { width: 100%; height: 100%; object-fit: contain; padding: 15px; }
-        .main-img { grid-row: span 2; }
-
-        .current-price { font-size: 5rem; font-weight: 800; margin: 5px 0; letter-spacing: -4px; color: #fff; }
-
-        .history-box {
-            max-width: 450px; margin: 30px auto; padding: 25px;
-            background: rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid var(--glass-border);
-        }
-        .history-item { 
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+        .heart-icon {
+            font-size: 5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: block;
+            animation: pulse 2s infinite;
         }
 
-        .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 30px 0; }
-        .tile {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border);
-            padding: 20px; border-radius: 18px; font-weight: 700; cursor: pointer; transition: 0.3s; color: #888;
-        }
-        .tile.active { background: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 0 30px rgba(225, 29, 72, 0.4); }
-
-        input {
-            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
-            padding: 22px; border-radius: 20px; color: white; margin-bottom: 15px;
-            font-size: 1.1rem; font-family: inherit; outline: none;
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .submit-btn {
-            width: 100%; padding: 25px; background: #fff; color: #000;
-            border: none; border-radius: 20px; font-weight: 800; font-size: 1.2rem;
-            cursor: pointer; transition: 0.4s; text-transform: uppercase;
+        .thanks-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            line-height: 1.6;
+            color: #eee;
+            margin-bottom: 30px;
         }
 
-        .wide-info-section {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 32px; padding: 40px; margin-top: 20px;
-            backdrop-filter: blur(10px); width: 100%;
+        .quote-box {
+            background: rgba(225, 29, 72, 0.05);
+            border-left: 4px solid var(--primary);
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 600px;
+            text-align: left;
+            border-radius: 0 16px 16px 0;
         }
-        .wide-info-section h2 { color: var(--primary); margin-top: 0; font-size: 1.5rem; }
-        .wide-info-section p { line-height: 1.8; color: #ccc; font-size: 1rem; margin: 0; white-space: pre-line; }
+
+        .quote-text {
+            font-style: italic;
+            color: #ccc;
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        /* Styl dla WIELKIEGO zdjęcia koszulki na środku */
+        .main-jersey-container {
+            text-align: center;
+            margin: 60px auto; /* Zwiększony margines i centralizacja */
+            padding: 20px;
+            background: rgba(255,255,255, 0.015); /* Nieco jaśniejsze tło dla lepszego kontrastu */
+            border-radius: 40px; /* Większe zaokrąglenie */
+            border: 1px solid rgba(255,255,255, 0.07);
+            max-width: 95%; /* Kontener zajmuje prawie pełną szerokość */
+        }
+
+        .main-jersey-img {
+            width: 100%; /* Zajmuje 100% szerokości kontenera */
+            max-width: 800px; /* Maksymalna szerokość samego obrazu */
+            height: auto; /* Automatyczna wysokość dla zachowania proporcji */
+            max-height: 1200px; /* Znacznie zwiększona maksymalna wysokość */
+            object-fit: contain; /* Obraz zmieści się w kontenerze bez ucinania */
+            display: block; /* Poprawne formatowanie */
+            margin: 0 auto; /* Wyśrodkowanie obrazu w kontenerze */
+            filter: drop-shadow(0 0 40px rgba(225, 29, 72, 0.4)); /* Mocniejszy blask */
+        }
+
+        .result-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 50px 20px;
+            text-align: center;
+            margin-top: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .final-price-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #666;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .final-price-value {
+            font-size: clamp(4.5rem, 12vw, 6.5rem);
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -4px;
+            color: #fff;
+            line-height: 0.9;
+        }
+
+        .currency {
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: 4px;
+            font-size: 1.4rem;
+            margin-top: 10px;
+            display: block;
+        }
+
+        footer { text-align: center; padding: 60px 40px 40px; color: #333; font-size: 0.9rem; }
 
         @media (max-width: 600px) {
-            .gallery { grid-template-columns: 1fr; grid-template-rows: 350px 200px 200px; }
-            .main-img { grid-row: span 1; }
-            .prizes { grid-template-columns: 1fr; }
-            .current-price { font-size: 4rem; }
+            .hero-ended { padding: 40px 20px; }
+            .thanks-text { font-size: 1.1rem; }
+            .main-jersey-img { max-height: 600px; } /* Mniejsze ograniczenie na mobile */
+            .final-price-value { font-size: 4rem; }
         }
-
-        #modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(20px); }
     </style>
 </head>
 <body>
 
 <div class="bg-glow"></div>
 
-<div id="modal">
-    <div style="text-align: center; padding: 40px; max-width: 500px;">
-        <h1 style="color: var(--primary); margin-bottom: 15px;">DZIĘKUJEMY! ❤️</h1>
-        <p style="color: #aaa; font-size: 1.1rem;">Twoja oferta została zarejestrowana.</p>
-        <button class="submit-btn" style="margin-top: 30px; width: auto; padding: 15px 50px;" onclick="location.reload()">POWRÓT</button>
-    </div>
-</div>
-
 <div class="container">
     <header>
-        <div class="badge">Wielkie Serce dla Maksa! ❤️</div>
-        <h1>Licytuj koszulkę Mistrza<br>Krzysztofa Ratajskiego! 🦅</h1>
+        <div class="badge">Licytacja Zakończona ❤️</div>
+        <h1>Wielkie Serce dla Maksa! 🦅</h1>
     </header>
 
-    <section class="manifesto">
-        <p>
-            Darta kocha się za emocje, ale dzisiaj te emocje towarzyszą nam w walce o zdrowie <strong>Maksymiliana Mazurka</strong>. 
-            Zapraszamy do licytacji wyjątkowego zestawu od najlepszego polskiego dartera, <strong>Krzysztofa Ratajskiego</strong>, 
-            z której całkowity dochód wesprze Maksa w jego walce!
+    <section class="hero-ended">
+        <span class="heart-icon">❤️</span>
+        <p class="thanks-text">
+            Dziękujemy za niesamowitą walkę i każde okazane wsparcie. Licytacja koszulki Krzysztofa Ratajskiego dobiegła końca!
         </p>
-        <div class="timer-grid">
-            <div class="timer-item"><span class="timer-val" id="d">00</span><span class="timer-label">Dni</span></div>
-            <div class="timer-item"><span class="timer-val" id="h">00</span><span class="timer-label">Godz</span></div>
-            <div class="timer-item"><span class="timer-val" id="m">00</span><span class="timer-label">Min</span></div>
-            <div class="timer-item"><span class="timer-val" id="s">00</span><span class="timer-label">Sek</span></div>
-        </div>
-        <div class="prizes">
-            <div class="prize-item">👕 <strong>Koszulka "Polish Eagle"</strong><br><small style="color:#666">Z autografem Mistrza</small></div>
-            <div class="prize-item">🎯 <strong>Komplet piórek</strong><br><small style="color:#666">Z autografem Mistrza</small></div>
+        <div class="quote-box">
+            <p class="quote-text">
+                "Widziałem, że Darterzy i Darterki mają mocne głowy... teraz wiem też, że mają i wielkie Serca."
+            </p>
         </div>
     </section>
 
-    <div class="gallery">
-        <div class="gallery-item main-img"><img src="https://i.imgur.com/mqHTrpl.png"></div>
-        <div class="gallery-item"><img src="https://i.imgur.com/DgtpxXi.png"></div>
-        <div class="gallery-item"><img src="https://i.imgur.com/K5dzFXw.jpg"></div>
+    <div class="main-jersey-container">
+        <img src="https://i.imgur.com/mqHTrpl.png" alt="Koszulka Krzysztofa Ratajskiego z autografem" class="main-jersey-img">
     </div>
 
-    <div class="bid-card">
-        <div style="font-size: 0.75rem; font-weight: 800; color: #666; letter-spacing: 5px;">AKTUALNA CENA</div>
-        <div class="current-price" id="displayPrice">0</div>
-        <div style="font-weight: 800; color: var(--primary); letter-spacing: 3px; margin-bottom: 30px;">PLN</div>
-
-        <div class="history-box">
-            <div id="bidHistoryList"></div>
-        </div>
-
-        <div class="tiles">
-            <div class="tile" onclick="setStep(20, this)">+20</div>
-            <div class="tile" onclick="setStep(50, this)">+50</div>
-            <div class="tile" onclick="setStep(100, this)">+100</div>
-            <div class="tile" onclick="setStep(200, this)">+200</div>
-            <div class="tile" onclick="setStep(500, this)">+500</div>
-            <div class="tile" onclick="setStep(1000, this)">+1000</div>
-        </div>
-
-        <input type="text" id="nameField" placeholder="Imię i Nazwisko">
-        <input type="tel" id="phoneField" placeholder="Numer telefonu">
-        <div id="newTotal" style="margin: 20px 0; font-weight: 700; font-size: 1.1rem; color: #666;">Twoja oferta: ---</div>
-        <button class="submit-btn" id="btnSubmit" onclick="submitBid()">Licytuj dla Maksa! 🚀</button>
+    <div class="result-card">
+        <div class="final-price-label">Koszulka wylicytowana za kwotę</div>
+        <div class="final-price-value">2 500</div>
+        <span class="currency">PLN</span>
     </div>
 
-    <div class="wide-info-section">
-        <h2>⏳ Kiedy kończymy?</h2>
-        <p>W darcie liczy się precyzja, a w pomaganiu – czas! Nie czekaj do ostatniej lotki.
-        📅 Finał licytacji: 29 marca
-        🕙 Godzina: 22:00</p>
-    </div>
-
-    <div class="wide-info-section">
-        <p>Otwórzmy serca i pokażmy siłę darterskiej społeczności! 
-        
-        Licytuj odważnie – dla Ciebie to piękna pamiątka, dla Maksa to bezcenna pomoc. 🚀❤️
-        Licytujemy o min 10 dyszkę więcej. Wygrywa najwyższa oferta złożona w stosownym czasie. Po zakończeniu licytacji skontaktujemy się ze zwycięzcą. W przypadku wycofania się osoby , która zwyciężyła nagroda zostanie przekazana do kolejnej osoby z najwyższą wylicytowaną kwotą. 
-        
-        Dostawa: 
-        Koszulkę wysyłamy za pobraniem ewentualnie istnieje możliwość odbioru osobiście w Częstochowie po wcześniejszym kontakcie telefonicznym</p>
-    </div>
-
-    <footer style="text-align: center; padding: 40px; color: #333; font-size: 0.9rem;">
-        &copy; 2026 Wielkie Serce dla Maksa 
+    <footer style="color: #555;">
+        &copy; 2026 Wielkie Serce dla Maksa | Drużyna Maksia 🎯
     </footer>
 </div>
 
-<script>
-    const script_URL = "https://script.google.com/macros/s/AKfycbwsTtHRj6YZRE3QWLHpsuSj8XgGZs9LHAc1Jtxj9gMmZgdTc3MYO7_3REs8CC8Xg0880A/exec"; 
-    const endDate = new Date("March 29, 2026 22:00:00").getTime();
-    let currentPrice = 0, selectedStep = 0;
-
-   async function fetchBids() {
-        try {
-            const res = await fetch(script_URL);
-            const data = await res.json();
-            
-            if(data && data.length > 0) {
-                // 1. Granica czasowa: 29 marca, 22:00
-                const limitDate = new Date("March 29, 2026 22:00:00").getTime();
-
-                // 2. Obliczamy aktualną cenę TYLKO z ofert przed 22:00
-                const validBids = data
-                    .filter(item => new Date(item.timestamp || item.date).getTime() <= limitDate)
-                    .map(b => parseFloat(b.bid))
-                    .filter(b => !isNaN(b));
-                
-                if (validBids.length > 0) {
-                    currentPrice = Math.max(...validBids);
-                    document.getElementById('displayPrice').innerText = currentPrice.toLocaleString();
-                }
-
-                // 3. Wyświetlamy historię (w tym te po czasie)
-                const historyList = document.getElementById('bidHistoryList');
-                historyList.innerHTML = "";
-                
-                // Pobieramy 5 ostatnich licytacji (niezależnie od czasu)
-                data.slice(-5).reverse().forEach(item => {
-                    const firstName = item.name.trim().split(' ')[0];
-                    const bidTime = new Date(item.timestamp || item.date).getTime();
-                    const isTooLate = bidTime > limitDate; // Sprawdzenie czy po 22:00
-                    
-                    const d = new Date(bidTime);
-                    const dateDisplay = `${d.getDate().toString().padStart(2, '0')}.${(d.getMonth() + 1).toString().padStart(2, '0')} o ${d.getHours().toString().padStart(2, '0')}:${d.getMinutes().toString().padStart(2, '0')}`;
-
-                    // Dodatkowy styl dla ofert po czasie
-                    const lateBadge = isTooLate ? `<span style="background:rgba(255,255,255,0.1); color:#ff4444; font-size:0.6rem; padding:2px 6px; border-radius:4px; margin-left:8px; border:1px solid #ff4444;">PO CZASIE</span>` : "";
-                    const opacity = isTooLate ? "opacity: 0.6;" : "";
-
-                    historyList.innerHTML += `
-                        <div class="history-item" style="flex-direction: column; align-items: flex-start; gap: 4px; ${opacity}">
-                            <div style="width: 100%; display: flex; justify-content: space-between; align-items: center;">
-                                <strong>${firstName} ${lateBadge}</strong>
-                                <span style="color:${isTooLate ? '#888' : 'var(--primary)'}; font-weight:800;">${item.bid} zł</span>
-                            </div>
-                            <div style="font-size: 0.7rem; color: #666;">📅 ${dateDisplay}</div>
-                        </div>`;
-                });
-            }
-        } catch(e) { console.error("Błąd licytacji:", e); }
-    }
-
-    function setStep(val, el) {
-        selectedStep = val;
-        document.getElementById('newTotal').innerText = "Twoja oferta: " + (currentPrice + val).toLocaleString() + " PLN";
-        document.querySelectorAll('.tile').forEach(t => t.classList.remove('active'));
-        el.classList.add('active');
-    }
-
-    async function submitBid() {
-        const name = document.getElementById('nameField').value.trim();
-        const phone = document.getElementById('phoneField').value.trim();
-        if(!name || !phone || selectedStep === 0) return alert("Podaj dane!");
-        
-        // ZAPAMIĘTYWANIE DANYCH
-        localStorage.setItem('bidderName', name);
-        localStorage.setItem('bidderPhone', phone);
-        
-        const btn = document.getElementById('btnSubmit');
-        btn.disabled = true; btn.innerText = "PRZESYŁANIE...";
-        try {
-            await fetch(script_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ "name": name, "phone": phone, "bid": currentPrice + selectedStep }) });
-            document.getElementById('modal').style.display = 'flex';
-        } catch(e) { btn.disabled = false; }
-    }
-
-    function updateTimer() {
-        const now = new Date().getTime();
-        const diff = endDate - now;
-        
-        if (diff <= 0) {
-            document.getElementById("d").innerText = "00";
-            document.getElementById("h").innerText = "00";
-            document.getElementById("m").innerText = "00";
-            document.getElementById("s").innerText = "00";
-
-            const btn = document.getElementById('btnSubmit');
-            if (btn) {
-                const endMessage = document.createElement('div');
-                endMessage.innerHTML = `
-                    <div style="background: var(--glass); border: 2px solid var(--primary); 
-                                padding: 20px; border-radius: 20px; color: #fff; 
-                                font-weight: 800; font-size: 1.4rem; text-transform: uppercase;
-                                box-shadow: 0 0 20px rgba(225, 29, 72, 0.2);">
-                        DZIĘKUJEMY ZA LICYTACJĘ! ❤️
-                    </div>`;
-                btn.replaceWith(endMessage);
-                document.querySelector('.tiles').style.display = 'none';
-                document.getElementById('nameField').style.display = 'none';
-                document.getElementById('phoneField').style.display = 'none';
-                document.getElementById('newTotal').style.display = 'none';
-            }
-            return;
-        }
-
-        document.getElementById("d").innerText = Math.floor(diff / 86400000).toString().padStart(2,'0');
-        document.getElementById("h").innerText = Math.floor((diff % 86400000) / 3600000).toString().padStart(2,'0');
-        document.getElementById("m").innerText = Math.floor((diff % 3600000) / 60000).toString().padStart(2,'0');
-        document.getElementById("s").innerText = Math.floor((diff % 60000) / 1000).toString().padStart(2,'0');
-    }
-
-    // FUNKCJA WCZYTYWANIA DANYCH
-    function loadUserData() {
-        const savedName = localStorage.getItem('bidderName');
-        const savedPhone = localStorage.getItem('bidderPhone');
-        if (savedName) document.getElementById('nameField').value = savedName;
-        if (savedPhone) document.getElementById('phoneField').value = savedPhone;
-    }
-
-    // START
-    loadUserData();
-    setInterval(updateTimer, 1000); 
-    setInterval(fetchBids, 1000);
-    fetchBids(); 
-    updateTimer();
-</script>
 </body>
 </html>
